@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Naruto</string>
+    <string name="naruto_sound_tracks">Naruto Sound Tracks</string>
+    <string name="madara">Madara</string>
+    <string name="obito"> Obito</string>
+    <string name="pain">Pain</string>
+    <string name="naruto">Naruto</string>
+    <string name="sasuke">Sasuke</string>
+    <string name="sasuke_introduction">Sasuke Introduction</string>
+</resources>
