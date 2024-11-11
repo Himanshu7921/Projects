@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Lucky Number</string>
+    <string name="layout_1_name">Lucky Number Generation</string>
+</resources>
