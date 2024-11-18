@@ -1,7 +1,3 @@
-Here's the complete documentation for your code. It includes detailed descriptions of each function, parameters, and their purpose.
-
----
-
 # **Image Processing Project Documentation**
 
 This script provides basic image processing operations, including cropping, grayscale conversion, negative transformation, binary conversion, and histogram generation. It is designed to demonstrate how to manipulate and visualize images using Python libraries like NumPy, PIL, and Matplotlib.
