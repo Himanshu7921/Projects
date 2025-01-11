@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <title>Spam Detector</title>
+    <style>
+        :root {
+            --primary-accent-color: #e5a370;
+            --secondary-accent-color: #d98f57;
+            --background-color: #fff8e1;
+            --text-color: #4b2b03;
+            --textarea-color: rgba(255, 255, 255, 0.8); 
+            --textarea-text-color:black;
+            --textarea-border-color:white;
+            --caution-background: #f5bd94;
+            --footer-background: rgba(255, 106, 0, 0.3);
+            --footer-a-color: #af4c00;
+            --footer-text-color: black;
+            --snowflake-color:rgb(205, 205, 249);
+        }
+        
+        body.night-mode {
+            --primary-accent-color: #f8ae60;
+            --secondary-accent-color: #fc9648;
+            --background-color: #121212;
+            --text-color: #f9a629;
+            --textarea-color: rgb(55, 56, 57, 0.8); 
+            --textarea-text-color:white;
+            --textarea-border-color:black;
+            --caution-background: #f8ae60;
+            --footer-background: rgba(0, 0, 0, 0.3);
+            --footer-a-color: #f0a500;
+            --footer-text-color:white;
+            --snowflake-color:rgb(255, 255, 255);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Quicksand, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            background-image: var(--background-image);
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        header {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2rem;
+            color: var(--secondary-accent-color);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1{
+            margin-top: 70px;
+            margin-bottom: 0px;
+        }
+
+        header p {
+            font-family: 'Quicksand', 'serif';
+            font-weight: 500;
+            font-size: 0.55em;
+            margin-top: 10px;
+            color: #d25f07;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        section {
+            width: 85%;
+            padding: 20px;
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.7em;
+            margin: 0;
+            color: var(--primary-accent-color);
+        }
+
+        textarea {
+            color: var(--textarea-text-color);
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid var(--textarea-border-color);
+            border-radius: 18px;
+            box-sizing: border-box;
+            resize: vertical;
+            transition: box-shadow 0.3s ease-in-out;
+            background-color: var(--textarea-color);
+        }
+
+        textarea:hover {
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea:focus {
+            outline: 1px solid #ececec;
+        }
+
+        button {
+            background-color: var(--primary-accent-color);
+            color: #7d3600;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--secondary-accent-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .caution {
+            background-color: var(--caution-background);
+            color: black;
+            padding: 10px;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .caution a {
+            color: #af4c00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            width: 100%;
+            color: var(--footer-text-color);
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            background: var(--footer-background);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        footer a {
+            color: var(--footer-a-color);
+            text-decoration: none;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            z-index: 9999;
+            pointer-events: none;
+            user-select: none;
+            font-size: 24px;
+            color: var(--snowflake-color);
+            animation: fall 10s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh);
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        #toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: var(--primary-accent-color);
+            color: #7d3600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #toggle-mode:hover {
+            background-color: var(--secondary-accent-color);
+            color: #4b2b03;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="toggle-mode">Switch to Night Mode</button>
+    <header>
+        <h1>Spam Detector Project</h1>
+        <p>A basic implementation using machine learning and PyTorch.</p>
+    </header>
+    <div class="container">
+        <section class="section1">
+            <h2>Test the Spam Detector</h2>
+            <p>Enter your email or message below to check if it's spam:</p>
+            <form id="spam-form">
+                <div class="input-container">
+                    <textarea id="email" name="email" rows="5" placeholder="Type your message here..."></textarea>
+                </div>
+                <button type="submit">Check for Spam</button>
+            </form>
+            <div id="result"></div>
+        </section>
+
+        <section class="section2">
+    <h2>Caution</h2>
+    <div class="caution">
+        <p>This website is a basic project and is <b>not intended for professional use</b>. The spam detection model has been trained on the <a href="https://www.kaggle.com/datasets">Kaggle SMS Spam Collection Dataset</a>.</p>
+        <p><b>Note:</b> The model's predictions may not always be accurate due to the following reasons:</p>
+        <ul>
+            <li>Limited training data that may not cover all possible spam messages.</li>
+            <li>Presence of ambiguous or unclear language that may confuse the model.</li>
+            <li>Differences in the context of the text not captured by the model's training.</li>
+            <li>Model bias towards certain types of content or phrases from the training data.</li>
+            <li>Potential influence of rare or new spam tactics that the model has not been exposed to.</li>
+        </ul>
+    </div>
+</section>
+
+
+        <footer>
+            <p>Project by <b>Himanshu Singh</b>. Explore the <a href="https://github.com">GitHub Repository</a> for the complete code and details.</p>
+            <p><a href="static/info.html">More Information About This Project</a></p>
+            <p>Design by <b>Gurvansh Singh Juneja</b>.</p>
+            <p>&copy; 2025. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Function to generate snowflakes
+        function generateSnowflakes() {
+            const numberOfSnowflakes = 50;
+            for (let i = 0; i < numberOfSnowflakes; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.textContent = '❄';
+                snowflake.classList.add('snowflake');
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
+                snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+                document.body.appendChild(snowflake);
+            }
+        }
+
+        // Toggle Day/Night Mode
+        document.getElementById('toggle-mode').addEventListener('click', function () {
+            document.body.classList.toggle('night-mode');
+            const modeText = document.body.classList.contains('night-mode') ? 'Switch to Day Mode' : 'Switch to Night Mode';
+            this.textContent = modeText;
+        });
+
+        $(document).ready(function () {
+    generateSnowflakes();
+
+    $('#spam-form').submit(function (e) {
+        e.preventDefault();  // Prevent form from submitting the traditional way
+
+        // Clear previous result before making the request
+        $('#result').html('');  // This clears the previous result
+
+        const emailContent = $('#email').val();  // Get the email content from the form
+
+        // Make the AJAX request to the /predict route
+        $.ajax({
+            url: '/predict',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ email: emailContent }),
+            success: function (response) {
+                // Handle the response from the server
+                $('#result').html('<p>Prediction: ' + response.message + '</p>');
+            },
+            error: function (error) {
+                // Handle error response
+                $('#result').html('<p>Error: ' + error.responseJSON.error + '</p>');
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+
+</html>
