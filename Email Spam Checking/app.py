@@ -6,11 +6,16 @@ from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 from Model import MyModel
 from flask_cors import CORS  # To handle CORS issues in case the frontend and backend are on different origins
+import os
 
 app = Flask(__name__)
 
 # Enable CORS for all routes
 CORS(app)
+
+# Initialize stemmer and stop words list
+stemmer = PorterStemmer()
+sp_words = set(stopwords.words('english'))
 
 # Load the pre-trained CountVectorizer
 with open('count_vectorizer.pkl', 'rb') as f:
@@ -23,10 +28,6 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 input_features = vectorizer.transform(["test"]).shape[1]  # Assuming the input size matches the vectorizer
 model = MyModel(input_features).to(device)
 model.load_state_dict(torch.load('model.pth', map_location=device, weights_only=True))
-
-# Initialize stemmer and stop words list
-stemmer = PorterStemmer()
-sp_words = set(stopwords.words('english'))
 
 @app.route('/')
 def home():
@@ -96,4 +97,5 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    port = int(os.environ.get('PORT', 5000))  # Use the environment-provided port
+    app.run(host='0.0.0.0', port=port, debug=False)
