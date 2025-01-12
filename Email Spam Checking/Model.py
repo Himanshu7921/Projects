@@ -68,7 +68,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 acc = Accuracy(task="binary", num_classes=2).to(device)
 
 # Training Loop
-epochs = 10000
+epochs = 7000
 for epoch in range(epochs):
     model.train()
     
