@@ -1,0 +1,11 @@
+# Ignore Python bytecode files
+*.pyc
+
+# Ignore log files
+*.log
+
+# Ignore the environment directory
+env/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
