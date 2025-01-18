@@ -1,0 +1,29 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore IPython notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore .DS_Store (macOS)
+.DS_Store
+
+# Ignore Jupyter notebook files
+*.ipynb
+
+# Ignore logs and databases
+*.log
+*.sqlite
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore test and coverage folders
+coverage/
+*.coveragerc
