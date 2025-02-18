@@ -1,0 +1,26 @@
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore Python bytecode files
+*.pyc
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore node_modules for frontend projects
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore IDE files (e.g., VS Code, IntelliJ)
+.vscode/
+.idea/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
