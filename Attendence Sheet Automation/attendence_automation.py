@@ -26,7 +26,7 @@ if st.button("Generate Excel Sheet"):
         df = pd.DataFrame(data)
 
         # Generate file name based on the current date
-        file_name = f"Attendance_{datetime.date.today()}.xlsx"
+        file_name = f"Attendance_{datetime.date.today()}.csv"
 
         # Save to Excel
         df.to_excel(file_name, index=False)
