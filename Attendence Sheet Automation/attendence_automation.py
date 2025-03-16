@@ -1,44 +1,40 @@
 import streamlit as st
 import pandas as pd
 import datetime
-from io import BytesIO
 
-# Streamlit UI
-st.title("📋 Attendance Generator")
-st.write("Enter attendance details in the format: `Person_1: Present, Person_2: Absent`")
+# Set page title
+st.title("Attendance Tracker")
 
-# User Input
-user_input = st.text_area("Enter Attendance Data:", "")
+# Input field for attendance
+user_input = st.text_area("Enter attendance (Format: Person_1: Present, Person_2: Absent, ...)", "")
 
-if st.button("Generate Attendance File"):
-    if not user_input.strip():
-        st.warning("Please enter attendance data!")
-    else:
+# Button to process input
+if st.button("Generate Excel Sheet"):
+    if user_input.strip():
         # Process input
         attendance = [entry.strip().split(": ") for entry in user_input.split(",")]
+        
+        # Separate present and absent persons
         present = [name for name, status in attendance if status.lower() == "present"]
         absent = [name for name, status in attendance if status.lower() == "absent"]
 
         # Create DataFrame
-        max_len = max(len(present), len(absent))
         data = {
-            "Present": present + [""] * (max_len - len(present)),
-            "Absent": absent + [""] * (max_len - len(absent))
+            "Present": present + [""] * (max(len(present), len(absent)) - len(present)),
+            "Absent": absent + [""] * (max(len(present), len(absent)) - len(absent))
         }
         df = pd.DataFrame(data)
 
-        # Generate Excel File
+        # Generate file name based on the current date
         file_name = f"Attendance_{datetime.date.today()}.xlsx"
-        output = BytesIO()
-        with pd.ExcelWriter(output, engine="openpyxl") as writer:
-            df.to_excel(writer, sheet_name="Attendance", index=False)
-        output.seek(0)
 
-        # Provide Download Link
-        st.success(f"✅ Attendance sheet `{file_name}` generated successfully!")
-        st.download_button(
-            label="📥 Download Excel File",
-            data=output,
-            file_name=file_name,
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+        # Save to Excel
+        df.to_excel(file_name, index=False)
+
+        # Provide download link
+        with open(file_name, "rb") as file:
+            st.download_button(label="Download Attendance Sheet", data=file, file_name=file_name, mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+        st.success(f"Attendance sheet generated: {file_name}")
+    else:
+        st.error("Please enter attendance details.")
