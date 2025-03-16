@@ -29,7 +29,7 @@ if st.button("Generate Excel Sheet"):
         file_name = f"Attendance_{datetime.date.today()}.csv"
 
         # Save to Excel
-        df.to_excel(file_name, index=False)
+        df.to_csv(file_name, index=False)
 
         # Provide download link
         with open(file_name, "rb") as file:
